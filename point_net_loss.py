@@ -8,8 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-# special loss for Classification: Focal Loss + regularization
+# special loss for Classification: Focal Loss + regularization.
 class PointNetLoss(nn.Module):
     def __init__(self, alpha=None, gamma=0, reg_weight=0, size_average=True):
         super(PointNetLoss, self).__init__()
@@ -25,7 +24,6 @@ class PointNetLoss(nn.Module):
         # get Balanced Cross Entropy Loss
         self.cross_entropy_loss = nn.CrossEntropyLoss(weight=self.alpha)
         
-
     def forward(self, predictions, targets, A=None):
 
         # get batch size
@@ -69,7 +67,6 @@ class PointNetSegLoss(nn.Module):
         # get Balanced Cross Entropy Loss
         self.cross_entropy_loss = nn.CrossEntropyLoss(weight=self.alpha)
         
-
     def forward(self, predictions, targets, pred_choice=None):
 
         # get Balanced Cross Entropy Loss
@@ -90,7 +87,6 @@ class PointNetSegLoss(nn.Module):
         # add dice coefficient if necessary
         if self.dice: return loss + self.dice_loss(targets, pred_choice, eps=1)
         else: return loss
-
 
     @staticmethod
     def dice_loss(predictions, targets, eps=1):

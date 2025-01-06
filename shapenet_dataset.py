@@ -98,7 +98,6 @@ class ShapenetDataset(Dataset):
                     self.num_seg_classes = l
         #print(self.num_seg_classes)
 
-
     def __getitem__(self, index):
         '''
         Each element has the format "class, points, segmentation labels, segmentation image"
@@ -155,7 +154,6 @@ class ShapenetDataset(Dataset):
             else:
                 return point_set, seg
 
-
     @staticmethod
     def random_rotate(points):
         ''' randomly rotates point cloud about vertical axis.
@@ -196,10 +194,28 @@ class ShapenetDataset(Dataset):
 
         return points
 
-
     def __len__(self):
         return len(self.datapath)
     
+# get class - label mappings
+CATEGORIES = {
+    'Airplane': 0, 
+    'Bag': 1, 
+    'Cap': 2, 
+    'Car': 3,
+    'Chair': 4, 
+    'Earphone': 5, 
+    'Guitar': 6, 
+    'Knife': 7, 
+    'Lamp': 8, 
+    'Laptop': 9,
+    'Motorbike': 10, 
+    'Mug': 11, 
+    'Pistol': 12, 
+    'Rocket': 13, 
+    'Skateboard': 14, 
+    'Table': 15}
+
 def read_pointnet_colors(seg_labels):
     ''' map segementation labels to colors '''
     map_label_to_rgb = {
@@ -214,7 +230,10 @@ def read_pointnet_colors(seg_labels):
     colors = np.array([map_label_to_rgb[label] for label in seg_labels])
     return colors
 
-ROOT = r"D:\ThangLuu\PointCloud\PointNet\archive\shapenet\shapenetcore_partanno_segmentation_benchmark_v0"
+ROOT = os.getcwd() + r"\archive\shapenet\shapenetcore_partanno_segmentation_benchmark_v0"
 
 sample_dataset = train_dataset = ShapenetDataset(ROOT, npoints=20000, split='train', classification=False, normalize=False)
 a = sample_dataset[2]
+print(a)
+
+
